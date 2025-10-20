@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 
-function HelloWorld() {
+function HelloWorld(props) {
     return (
         <Fragment>
             <hr />
-            <h1>Hello, World!!!</h1>
+            <h1>{props.message}</h1>
         </Fragment>
     );
 }
