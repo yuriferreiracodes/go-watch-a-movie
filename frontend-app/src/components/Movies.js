@@ -1,44 +1,42 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
 
-    useEffect(() => {
+  useEffect(() => {
     const moviesList = [
-        {
+      {
         id: 1,
         title: "Highlander",
         release_date: "1986-03-07",
         runtime: 116,
         mpaa_rating: "R",
         description:
-            "A Scottish warrior learns he cannot die after a battle wound. Many years later in New York, he must fight others like him until only one remains.",
-        link: "https://www.imdb.com/title/tt0091203/",
-        },
-        {
+          "A Scottish warrior learns he cannot die after a battle wound. Many years later in New York, he must fight others like him until only one remains.",
+      },
+      {
         id: 2,
         title: "The Matrix",
         release_date: "1999-03-31",
         runtime: 136,
         mpaa_rating: "R",
         description:
-            "A hacker named Neo finds that his world is a computer illusion. He joins a small team to fight the machines that control humanity.",
-        link: "https://www.imdb.com/title/tt0133093/",
-        },
-        {
+          "A hacker named Neo finds that his world is a computer illusion. He joins a small team to fight the machines that control humanity.",
+      },
+      {
         id: 3,
         title: "Freddy vs. Jason",
         release_date: "2003-08-15",
         runtime: 97,
         mpaa_rating: "R",
         description:
-            "Freddy Krueger and Jason Voorhees come back to kill again. But soon they fight each other in a big and scary final battle.",
-        link: "https://www.imdb.com/title/tt0329101/",
-        },
+          "Freddy Krueger and Jason Voorhees come back to kill again. But soon they fight each other in a big and scary final battle.",
+      },
     ];
 
     setMovies(moviesList);
-    }, []);
+  }, []);
 
   return (
     <div className="container mt-4">
@@ -47,10 +45,8 @@ const Movies = () => {
       <div className="row">
         {movies.map((movie) => (
           <div key={movie.id} className="col-md-4 mb-3">
-            <a
-              href={movie.link}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to={`/movie/${movie.id}`}
               className="text-decoration-none text-dark"
               style={{ display: "block" }}
             >
@@ -87,7 +83,7 @@ const Movies = () => {
                   {movie.runtime} min | {movie.mpaa_rating}
                 </div>
               </div>
-            </a>
+            </Link>
           </div>
         ))}
       </div>
