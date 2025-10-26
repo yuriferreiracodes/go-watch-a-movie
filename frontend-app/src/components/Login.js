@@ -43,7 +43,7 @@ const Login = () => {
                     title="password"
                     className="form-control mt-2"
                     autoComplete="password-new"
-                    onChange={(event) => setEmail(event.target.value)}
+                    onChange={(event) => setPassword(event.target.value)}
                 />
                 <hr />
                 <input
