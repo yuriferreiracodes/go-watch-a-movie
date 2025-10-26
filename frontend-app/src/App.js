@@ -16,7 +16,7 @@ function App() {
         </div>
         <div className="col text-end">
           {jwtToken === ""
-            ? <Link to="#!"><span className="badge bg-success">Login</span></Link>
+            ? <Link to="/login"><span className="badge bg-success">Login</span></Link>
             : <Link to="#!"><span className="badge bg-danger">Logout</span></Link>
           }
         </div>
