@@ -9,19 +9,17 @@ import (
 const port = 8080
 
 type application struct {
-	Domain string 
+	Domain string
 }
 
 func main() {
-	var app application 
-
-	app.Domain = "example.com"
+	app := &application{
+		Domain: "example.com",
+	}
 
 	log.Printf("Starting application on port %d", port)
 
-	http.HandleFunc("/", Hello)
-
-	err := http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
+	err := http.ListenAndServe(fmt.Sprintf(":%d", port), app.routes())
 	if err != nil {
 		log.Fatal(err)
 	}
