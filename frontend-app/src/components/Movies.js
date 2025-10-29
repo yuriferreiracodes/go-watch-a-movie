@@ -5,37 +5,21 @@ const Movies = () => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    const moviesList = [
-      {
-        id: 1,
-        title: "Highlander",
-        release_date: "1986-03-07",
-        runtime: 116,
-        mpaa_rating: "R",
-        description:
-          "A Scottish warrior learns he cannot die after a battle wound. Many years later in New York, he must fight others like him until only one remains.",
-      },
-      {
-        id: 2,
-        title: "The Matrix",
-        release_date: "1999-03-31",
-        runtime: 136,
-        mpaa_rating: "R",
-        description:
-          "A hacker named Neo finds that his world is a computer illusion. He joins a small team to fight the machines that control humanity.",
-      },
-      {
-        id: 3,
-        title: "Freddy vs. Jason",
-        release_date: "2003-08-15",
-        runtime: 97,
-        mpaa_rating: "R",
-        description:
-          "Freddy Krueger and Jason Voorhees come back to kill again. But soon they fight each other in a big and scary final battle.",
-      },
-    ];
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json")
+    const requestOptions = {
+      method: "GET",
+      headers: headers, 
+    }
 
-    setMovies(moviesList);
+    fetch(`http://localhost:9000/movies`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        setMovies(data);
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }, []);
 
   return (
