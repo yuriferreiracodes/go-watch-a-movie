@@ -5,7 +5,9 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . .
-# Compila o binário a partir da pasta cmd/api
+
+RUN go mod tidy
+
 RUN go build -o main ./cmd/api
 
 FROM gcr.io/distroless/base-debian11

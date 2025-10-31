@@ -1,23 +1,26 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
+
+	"backend/internal/db"
 )
 
 const port = 9000
 
 type application struct {
-	Domain string
+	DB *sql.DB
 }
 
 func main() {
-	app := &application{
-		Domain: "example.com",
-	}
+	database := db.Connect()
 
-	log.Printf("Starting application on port %d", port)
+	app := &application{DB: database}
+
+	log.Printf("Connected to MySQL and starting server on port %d", port)
 
 	err := http.ListenAndServe(fmt.Sprintf(":%d", port), app.routes())
 	if err != nil {
