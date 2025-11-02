@@ -1,5 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# database data (local MySQL volume)
+mysql_data/
+
 # dependencies
 /frontend-app/node_modules
 /frontend-app/.pnp
