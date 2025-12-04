@@ -23,6 +23,7 @@ func (app *application) Home(w http.ResponseWriter, r *http.Request) {
         http.Error(w, err.Error(), http.StatusInternalServerError)
         return
     }
+    
     w.Header().Set("Content-Type", "application/json")
     w.WriteHeader(http.StatusOK)
     w.Write(out)
@@ -43,4 +44,23 @@ func (app *application) AllMovies(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.NewEncoder(w).Encode(movies)
+}
+
+func (app *application) GetMovieByID(w http.ResponseWriter, r *http.Request) {
+    idStr := chi.URLParam(r, "id")
+    id, _ := strconv.Atoi(idStr)
+
+    db := db.Connect()
+    defer db.Close()
+
+    row := db.QueryRow(`
+        SELECT id, title, description, release_date, runtime, mpaa_rating, image
+        FROM movies
+        WHERE id = $1
+    `, id)
+
+    var m models.Movie
+    row.Scan(&m.ID, &m.Title, &m.Description, &m.ReleaseDate, &m.RunTime, &m.MPAARating, &m.Image)
+
+    json.NewEncoder(w).Encode(m)
 }
