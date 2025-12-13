@@ -3,9 +3,12 @@ package main
 import (
     "encoding/json"
     "net/http"
+    "strconv"
 
     "backend/internal/db"
     "backend/internal/models"
+
+    "github.com/go-chi/chi/v5"
 )
 
 func (app *application) Home(w http.ResponseWriter, r *http.Request) {
@@ -30,7 +33,7 @@ func (app *application) Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) AllMovies(w http.ResponseWriter, r *http.Request) {
-	db := db.Connect()
+    db := db.Connect()
 	defer db.Close()
 
 	rows, _ := db.Query("SELECT id, title, description, release_date, runtime, mpaa_rating, image FROM movies")
@@ -46,21 +49,31 @@ func (app *application) AllMovies(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(movies)
 }
 
-func (app *application) GetMovieByID(w http.ResponseWriter, r *http.Request) {
+func (app *application) GetMovieById(w http.ResponseWriter, r *http.Request) {
     idStr := chi.URLParam(r, "id")
-    id, _ := strconv.Atoi(idStr)
-
+    
+    id, err := strconv.Atoi(idStr)
+    if err != nil {
+        http.Error(w, "Invalid movie ID", http.StatusBadRequest)
+        return
+    }
+    
     db := db.Connect()
     defer db.Close()
-
+    
     row := db.QueryRow(`
         SELECT id, title, description, release_date, runtime, mpaa_rating, image
         FROM movies
-        WHERE id = $1
+        WHERE id = ?
     `, id)
-
+    
     var m models.Movie
-    row.Scan(&m.ID, &m.Title, &m.Description, &m.ReleaseDate, &m.RunTime, &m.MPAARating, &m.Image)
-
+    err = row.Scan(&m.ID, &m.Title, &m.Description, &m.ReleaseDate, &m.RunTime, &m.MPAARating, &m.Image)
+    if err != nil {
+        http.Error(w, "Movie not found", http.StatusNotFound)
+        return
+    }
+    
+    w.Header().Set("Content-Type", "application/json")
     json.NewEncoder(w).Encode(m)
 }
