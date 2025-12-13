@@ -1,2 +1,2 @@
 # go-watch-a-movie
-Full-stack movie catalog built with React and Go, using GraphQL for API communication and JWT auth for secure access. Focused on clean code and web practices.
+A full-stack movie catalog built with React and Go, featuring a GraphQL API and JWT-based authentication. Designed with a strong focus on clean architecture, maintainable code, and modern web development best practices.
