@@ -79,7 +79,7 @@ func (j *Auth) GenerateTokenPair(user *jwtUser) (TokenPairs, error) {
 	return tokenPairs, nil
 }
 
-func (j *Auth) GenerateTokenPair(user *jwtUser) (tokenPairs, error) {
+func (j *Auth) GenerateTokenPair(user *jwtUser) (TokenPairs, error) {
 	//Create the token
 	token := jwt.New(jwt.SigningMethodHS256)
 
@@ -125,5 +125,5 @@ func (j *Auth) GenerateTokenPair(user *jwtUser) (tokenPairs, error) {
 	}
 
 	//Return TokenPairs
-	return tokenPairs, nil
+	return TokenPairs, err
 }
